@@ -2,6 +2,7 @@
 
 size_t Strlen(const char* str) {
   size_t len = 0;
+
   while (*str != 0) {
     ++len;
     ++str;
@@ -30,29 +31,27 @@ int Strncmp(const char* first, const char* second, size_t count) {
 }
 
 char* Strcpy(char* dest, const char* src) {
-  char* curr = dest;
   while (*src != 0) {
-    *curr = *src;
-    ++curr;
+    *dest = *src;
+    ++dest;
     ++src;
   }
 
-  *curr = '\0';
+  *dest = '\0';
   return dest;
 }
 
 char* Strncpy(char* dest, const char* src, size_t count) {
-  char* curr = dest;
   while (*src != 0 && (count != 0)) {
-    *curr = *src;
-    ++curr;
+    *dest = *src;
+    ++dest;
     ++src;
     --count;
   }
 
   while (count > 0) {
-    *curr = '\0';
-    ++curr;
+    *dest = '\0';
+    ++dest;
     --count;
   }
 
@@ -60,11 +59,11 @@ char* Strncpy(char* dest, const char* src, size_t count) {
 }
 
 char* Strcat(char* dest, const char* src) {
-  int des_len = Strlen(dest);
+  int dest_len = Strlen(dest);
   int src_len = Strlen(src);
 
-  for (int i = des_len; i < des_len + src_len; ++i) {
-    dest[i] = src[i - des_len];
+  for (int i = dest_len; i < dest_len + src_len; ++i) {
+    dest[i] = src[i - dest_len];
   }
 
   return dest;
@@ -143,14 +142,14 @@ size_t Strcspn(const char* dest, const char* src) {
 
 const char* Strpbrk(const char* dest, const char* breakset) {
   while (*dest != 0) {
-    const char* curr = breakset;
-    while (*curr != *dest && *curr != 0) {
-      ++curr;
+    while (*breakset != *dest && *breakset != 0) {
+      ++breakset;
     }
 
-    if (*curr != 0) {
+    if (*breakset != 0) {
       return dest;
     }
+
     ++dest;
   }
   return nullptr;
@@ -158,16 +157,16 @@ const char* Strpbrk(const char* dest, const char* breakset) {
 
 const char* Strstr(const char* str, const char* pattern) {
   int str_len = Strlen(str);
-  int pat_len = Strlen(pattern);
+  int pattern_len = Strlen(pattern);
 
-  for (int i = 0; i <= str_len - pat_len; ++i) {
+  for (int i = 0; i <= str_len - pattern_len; ++i) {
     int j = 0;
 
-    while ((j < pat_len) && (str[i + j] == pattern[j])) {
+    while ((j < pattern_len) && (str[i + j] == pattern[j])) {
       ++j;
     }
 
-    if (j == pat_len) {
+    if (j == pattern_len) {
       return &str[i];
     }
   }
